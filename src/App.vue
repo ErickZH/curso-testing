@@ -21,10 +21,10 @@
 
 <script>
 export default {
-  name: 'app',
+  name: 'App',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Hello'
     }
   }
 }
