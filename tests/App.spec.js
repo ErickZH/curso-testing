@@ -14,5 +14,30 @@ test('component has a name', () => {
 test('default data is corret', () => {
     const wrapper = mount(App);
 
-    expect(wrapper.vm.msg).toBe('Hello');
+    expect(wrapper.vm.msg).toBe('');
+});
+
+test('msg data is displayed', () => {
+    const wrapper = mount(App);
+    wrapper.setData({ msg: 'Hello' });
+    expect(wrapper.text()).toContain('Hello');
+});
+
+test('msg is bound to input value', () => {
+    const wrapper = mount(App);
+    const input = wrapper.find('input');
+    wrapper.setData({ msg: 'Hello' });
+
+    input.element.value = 'Updated text';
+    input.trigger('input');
+    expect(wrapper.html()).toContain('Updated text');
+});
+
+test('fullName computed is firstName + lastName', () => {
+    const wrapper = mount(App);
+    wrapper.setData({
+        firstName: 'John',
+        lastName: 'Doe'
+    });
+    expect(wrapper.vm.fullName).toBe('John Doe');
 });
