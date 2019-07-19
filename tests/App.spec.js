@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import App from '@/App'
 
 test('1 + 1 is 2', () => {
@@ -137,3 +137,20 @@ test('warning is not displayed if msg is not empty', () => {
     expect(wrapper.contains('#warning')).toBe(false);
 });
 
+test('warning message is a div', () => {
+    const wrapper = mount(App);
+    
+    expect(wrapper.find('#warning').is('div')).toBe(true);
+});
+
+test('warning message is a not empty', () => {
+    const wrapper = mount(App);
+    
+    expect(wrapper.find('#warning').isEmpty()).toBe(false);
+});
+
+test('warning message has red class', () => {
+    const wrapper = mount(App);
+    
+    expect(wrapper.find('#warning').classes()).toContain('red');
+});
