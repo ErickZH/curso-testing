@@ -83,3 +83,57 @@ test('is a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
 });
 
+test('msg is displayed inside message span', () => {
+    const wrapper = mount(App);
+
+    wrapper.setData({
+        msg: 'Hello World'
+    });
+
+    const span = wrapper.find('span#message');
+    expect(span.text()).toBe('Hello World');
+});
+
+test('fullName is displayed inside full-name span', () => {
+    const wrapper = mount(App, {
+        computed: { fullName: () => 'John Doe'}
+    });
+
+    const span = wrapper.find('span#full-name');
+    expect(span.text()).toBe('John Doe');
+});
+
+test('message is displayed before full-name', () => {
+    const wrapper = mount(App, {
+        computed: { fullName: () => 'John Doe' }
+    });
+    wrapper.setData({
+        msg: 'Hello'
+    });
+
+    const spans = wrapper.findAll('span');
+
+    expect(spans.wrappers[0].text()).toBe('Hello');
+    expect(spans.wrappers[1].text()).toBe('John Doe');
+});
+
+test('warning is displayed if msg empty', () => {
+    const wrapper = mount(App);
+    wrapper.setData({
+        msg: ''
+    });
+
+    // const warning = wrapper.find('#warning');
+    // expect(warning.exists()).toBe(true);
+
+    expect(wrapper.contains('#warning')).toBe(true);
+});
+
+test('warning is not displayed if msg is not empty', () => {
+    const wrapper = mount(App);
+    wrapper.setData({
+        msg: 'something'
+    });
+    expect(wrapper.contains('#warning')).toBe(false);
+});
+
