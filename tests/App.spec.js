@@ -41,3 +41,45 @@ test('fullName computed is firstName + lastName', () => {
     });
     expect(wrapper.vm.fullName).toBe('John Doe');
 });
+
+test('fullName computed is displayed', () => {
+    const wrapper = mount(App, {
+        computed: {
+            fullName: () => 'John Doe'
+        }
+    });
+
+    expect(wrapper.text()).toContain('John Doe');
+});
+
+test('toUppercase method is called when button is pressed', () => {
+    // mock
+    const toUppercase = jest.fn();
+    const wrapper = mount(App, {
+        methods: {
+            toUppercase
+        }
+    });
+    
+    // assert
+    expect(toUppercase).toHaveBeenCalledTimes(0);
+    const button = wrapper.find('button')
+    button.trigger('click');
+    expect(toUppercase).toHaveBeenCalledTimes(1);
+});
+
+test('firstName is in uppercase when toUppercase method is called', () => {
+    const wrapper = mount(App);
+    wrapper.setData({
+        firstName: 'John'
+    });
+
+    wrapper.vm.toUppercase();
+    expect(wrapper.vm.firstName).toBe('JOHN');
+});
+
+test('is a Vue instance', () => {
+    const wrapper = mount(App)
+    expect(wrapper.isVueInstance()).toBeTruthy()
+});
+
