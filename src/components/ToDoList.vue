@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header/>
-        <Task v-for="task in tasks" :key="task" :task="task"/>
+        <Task v-for="task in tasks" :key="task" :task="task" @delete="deleteTask(task)"/>
     </div>
 </template>
 <script>
@@ -17,6 +17,12 @@ export default {
     components: {
         Task,
         Header,
-    }
+    },
+
+    methods: {
+        deteleTask(task) {
+            console.log(task);
+        }
+    },
 }
 </script>
