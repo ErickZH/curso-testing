@@ -1,7 +1,11 @@
 <template>
     <div>
+        <div>
+            <span id="delete" @click="$emit('delete')">
+                <slot></slot>
+            </span>
+        </div>
         {{ task }}
-        <span id="delete" @click="$emit('delete')">x</span>
     </div>
 </template>
 <script>

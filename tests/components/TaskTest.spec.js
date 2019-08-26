@@ -1,5 +1,5 @@
-import { mount } from '@vue/test-utils'
 import Task from '@/components/Task';
+import { mount, shallow } from '@vue/test-utils'
 
 describe('Component Task', () => {
     test('it has name', () => {
@@ -20,5 +20,15 @@ describe('Component Task', () => {
         const button = wrapper.find('#delete');
         button.trigger('click');
         expect(wrapper.emitted().delete).toBeTruthy();
+    });
+
+    test('it renders default slot', () => {
+        const wrapper = shallow(Task, {
+            slots: {
+                default: 'close'
+            }
+        });
+
+        expect(wrapper.text()).toContain('close');
     });
 });
