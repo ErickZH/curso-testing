@@ -1,8 +1,18 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import VueRouter from 'vue-router'
+import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import ToDoList from '@/components/ToDoList';
 import Task from '@/components/Task';
 import TaskStub from '../stubs/Task';
 import { JestEnvironment } from '@jest/environment';
+
+const localVue = createLocalVue();
+localVue.use(VueRouter);
+
+const routes = [
+    { path: 'foo' }
+];
+
+const router = new VueRouter({ routes });
 
 describe('Component ToDoList', () => {
     test('it has name', () => {
@@ -67,5 +77,14 @@ describe('Component ToDoList', () => {
         
         expect(deleteTask).toHaveBeenCalledTimes(1);
         expect(deleteTask.mock.calls[0][0]).toBe('MY PROP');
+    });
+
+    test('it has $router defined', () => {
+        const wrapper = shallowMount(ToDoList, { 
+            router,
+            localVue,
+        });
+
+        expect(wrapper.vm.$router).toBeTruthy();
     });
 });
